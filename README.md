@@ -1,5 +1,19 @@
 # Operations QA
 
+## View the dashboard
+
+| | |
+|---|---|
+| **Live demo (synthetic data)** | **[https://lancecmaben.github.io/ops-qa-demo/](https://lancecmaben.github.io/ops-qa-demo/)** |
+| From this repo | **About** → **Website** on the repo home (same URL) |
+
+[![Open live demo](thumbnail.png)](https://lancecmaben.github.io/ops-qa-demo/)
+
+---
+
+<details>
+<summary><strong>Domo team notes (3enrollment source)</strong></summary>
+
 **Repo home:** [`eee_internal_insights`](https://github.com/3enrollment/eee_internal_insights) → folder `Ops_QA/`  
 **Portal:** 3E Insights Portal · ClearSquare **Development → internal** (Dev card). Prod is internal-only.
 
@@ -52,3 +66,5 @@ Map all ten dataset aliases on the card if Domo does not pick them up from the m
 ## Node / vendor
 
 `package.json` and `vendor/domo.js`. Do not commit `node_modules`.
+
+</details>
