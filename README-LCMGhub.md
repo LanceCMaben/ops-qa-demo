@@ -6,7 +6,7 @@ Static snapshot of **Operations QA** from `3enrollment/eee_internal_insights` â†
 
 **https://lancecmaben.github.io/ops-qa-demo/**
 
-Dataset QA card for 3E Operations chapters â€” runs in Domo only.
+**Demo mode:** Run checks executes against synthetic Operations datasets (XHR/SQL shim). Results mirror real check logic where possible; some warn/fail outcomes are illustrative.
 
 ## Domo publish
 

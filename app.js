@@ -872,7 +872,7 @@
 
   function runAll() {
     if (running) return;
-    if (typeof domo === 'undefined' || !domo.post) {
+    if ((typeof domo === 'undefined' || !domo.post) && !window.__PAGES_DEMO__) {
       setStatus('Open this card in Domo to run checks.');
       return;
     }
