@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Operations QA</title>
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('3e-dashboard-theme');
+          var theme = saved;
+          if (theme !== 'light' && theme !== 'dark') {
+            theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+          else document.documentElement.setAttribute('data-theme', 'light');
+        } catch (e) { /* ignore */ }
+      })();
+    </script>
+    <link rel="stylesheet" href="app.css" />
+  </head>
+  <body>
+    <div id="exportRoot">
+      <div class="app-body">
+        <header class="page-header">
+          <div>
+            <h1 class="page-title">
+              <span class="page-title-brand">Operations QA</span><span class="page-title-context"> · 3E Operations</span>
+            </h1>
+          </div>
+          <div class="header-controls">
+            <button type="button" id="btnExportReport" class="header-secondary-btn" disabled>Export report</button>
+            <button type="button" id="runChecks" class="header-export-report-btn">Run checks</button>
+            <div class="theme-toggle" role="group" aria-label="Color theme">
+              <button type="button" class="theme-toggle-btn" data-theme-set="light" aria-pressed="false">Light</button>
+              <button type="button" class="theme-toggle-btn is-active" data-theme-set="system" aria-pressed="true">System</button>
+              <button type="button" class="theme-toggle-btn" data-theme-set="dark" aria-pressed="false">Dark</button>
+            </div>
+          </div>
+        </header>
+
+        <p class="page-description">
+          Dataset checks for each 3E Operations chapter. The catalog below is the list of checks; nothing is queried until you click Run checks. Fail is empty data. Warn is a stale date. Click Fail or Warn for details.
+        </p>
+
+        <p id="runStatus" class="run-status" role="status" aria-live="polite">Ready. Run checks when you want a fresh report.</p>
+
+        <section class="kpi-row" aria-label="Run summary">
+          <article class="kpi-card">
+            <p class="kpi-label">Result</p>
+            <p class="kpi-value" id="kpiResult">—</p>
+            <p class="kpi-hint" id="kpiResultHint">After a run</p>
+          </article>
+          <article class="kpi-card">
+            <p class="kpi-label">Chapters failed</p>
+            <p class="kpi-value" id="kpiChapters">—</p>
+            <p class="kpi-hint" id="kpiChaptersHint">Any failed check</p>
+          </article>
+          <article class="kpi-card">
+            <p class="kpi-label">Checks failed</p>
+            <p class="kpi-value" id="kpiChecks">—</p>
+            <p class="kpi-hint" id="kpiChecksHint">Open a chapter for the reason</p>
+          </article>
+          <article class="kpi-card">
+            <p class="kpi-label">Last run</p>
+            <p class="kpi-value kpi-value--date" id="kpiWhen">—</p>
+            <p class="kpi-hint">This session</p>
+          </article>
+        </section>
+
+        <section id="runProgress" class="run-progress" hidden>
+          <div class="loading-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+          <p id="runProgressLabel" class="app-loading-label">Running checks…</p>
+          <div id="runProgressBar" class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Check progress">
+            <div id="runProgressFill" class="progress-fill"></div>
+          </div>
+          <p id="runProgressMeta" class="progress-meta">0 of 0</p>
+        </section>
+
+        <nav id="chapterChips" class="chapter-chips" hidden aria-label="Jump to chapter"></nav>
+        <section id="datasetStrip" class="dataset-strip" hidden aria-label="Datasets"></section>
+
+        <div id="reportToolbar" class="report-toolbar" hidden>
+          <div class="filter-pills" role="group" aria-label="Report filter">
+            <button type="button" class="filter-pill is-active" data-report-filter="all" aria-pressed="true">All checks</button>
+            <button type="button" class="filter-pill" data-report-filter="attention" aria-pressed="false">Needs attention</button>
+          </div>
+          <button type="button" id="btnCopyFailures" class="header-secondary-btn" disabled>Copy failures</button>
+        </div>
+
+        <section id="report" class="report" aria-live="polite"></section>
+      </div>
+    </div>
+    <div id="checkDetailOverlay" class="detail-overlay" tabindex="-1" aria-hidden="true"></div>
+    <aside id="checkDetailDrawer" class="detail-drawer" role="dialog" aria-modal="true" aria-labelledby="checkDetailTitle" aria-hidden="true">
+      <div class="detail-drawer-inner">
+        <div class="detail-drawer-head">
+          <div class="detail-drawer-head-text">
+            <h2 id="checkDetailTitle">Check details</h2>
+            <p class="detail-drawer-sub" id="checkDetailSub"></p>
+          </div>
+          <button type="button" id="btnCloseCheckDetail" class="btn-close-help" aria-label="Close check details">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+        <div class="detail-drawer-body" id="checkDetailBody"></div>
+      </div>
+    </aside>
+    <script src="vendor/domo.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
